@@ -26,12 +26,7 @@
 - 매주 화요일 9시 온라인에 모여서 서로 공부한 내용에 대해 공유합니다.
 
 ## 구성원
-| 김단우 | 이수민 | 이지원 | 최아람 | 황태영 |
-|:----:|:----:|:----:|:----:|:----:|
-| <img src="https://github.com/KimDanwoo.png" width="150"> | <img src="https://github.com/leesm-sumin.png" width="150"> | <img src="https://github.com/cruellaDev.png" width="150"> | <img src="https://github.com/rami0617.png" width="150"> | <img src="https://github.com/hty0525.png" width="150"> |
-| <div style="width:150px">[@KimDanwoo](https://github.com/KimDanwoo)</div> | <div style="width:150px">[@leesm-sumin](https://github.com/leesm-sumin)</div> | <div style="width:150px">[@cruellaDev](https://github.com/cruellaDev)</div> | <div style="width:150px">[@rami0617](https://github.com/rami0617)</div> | <div style="width:150px">[@hty0525](https://github.com/hty0525)</div> |
-
-| 김명수 |
-|:----:|
-| <img src="https://github.com/KimMyeongSu.png" width="150"> |
-| <div style="width:150px">[@KimMyeongSu](https://github.com/KimMyeongSu)</div> | 
+| 김단우 | 김명수 | 이수민 | 이지원 | 최아람 | 황태영 |
+|:----:|:----:|:----:|:----:|:----:|:----:|
+| <img src="https://github.com/KimDanwoo.png" width="150"> | <img src="https://github.com/KimMyeongSu.png" width="150"> | <img src="https://github.com/leesm-sumin.png" width="150"> | <img src="https://github.com/cruellaDev.png" width="150"> | <img src="https://github.com/rami0617.png" width="150"> | <img src="https://github.com/hty0525.png" width="150"> |
+| <div style="width:150px">[@KimDanwoo](https://github.com/KimDanwoo)</div> | <div style="width:150px">[@KimMyeongSu](https://github.com/KimMyeongSu)</div> | <div style="width:150px">[@leesm-sumin](https://github.com/leesm-sumin)</div> | <div style="width:150px">[@cruellaDev](https://github.com/cruellaDev)</div> | <div style="width:150px">[@rami0617](https://github.com/rami0617)</div> | <div style="width:150px">[@hty0525](https://github.com/hty0525)</div> |
