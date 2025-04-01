@@ -6,11 +6,11 @@
 
 ## 책 목록
 1. [자바스크립트 + 리액트 디자인 패턴 / 한빛 미디어](https://product.kyobobook.co.kr/detail/S000213880201)
-2. 
+2. [쏙쏙 들어오는 함수형 코딩](https://product.kyobobook.co.kr/detail/S000001952246)
 
 ## 기간
 1. 자바스크립트 + 리액트 디자인 패턴 : 2025/02/04 ~ 2025/03/25 (7주), 김단우/이수민/이지원/최아람/황태영
-2. 
+2. 쏙쏙 들어오는 함수형 코딩 : 2025/04/02 ~ , 김단우/김명수/이수민/이지원/최아람/황태영
 
 ## 후기
 1. 자바스크립트 + 리액트 디자인 패턴
@@ -30,3 +30,8 @@
 |:----:|:----:|:----:|:----:|:----:|
 | <img src="https://github.com/KimDanwoo.png" width="150"> | <img src="https://github.com/leesm-sumin.png" width="150"> | <img src="https://github.com/cruellaDev.png" width="150"> | <img src="https://github.com/rami0617.png" width="150"> | <img src="https://github.com/hty0525.png" width="150"> |
 | <div style="width:150px">[@KimDanwoo](https://github.com/KimDanwoo)</div> | <div style="width:150px">[@leesm-sumin](https://github.com/leesm-sumin)</div> | <div style="width:150px">[@cruellaDev](https://github.com/cruellaDev)</div> | <div style="width:150px">[@rami0617](https://github.com/rami0617)</div> | <div style="width:150px">[@hty0525](https://github.com/hty0525)</div> |
+
+| 김명수 |
+|:----:|
+| <img src="https://github.com/KimMyeongSu.png" width="150"> |
+| <div style="width:150px">[@KimMyeongSu](https://github.com/KimMyeongSu)</div> | 
