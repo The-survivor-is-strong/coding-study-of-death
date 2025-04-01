@@ -18,6 +18,7 @@
     - 황태영 : <a href="https://velog.io/@hty0525/JavaScript-React-%EB%94%94%EC%9E%90%EC%9D%B8-%ED%8C%A8%ED%84%B4%EC%9D%84-%EC%9D%BD%EA%B3%A0" target="_blank">블로그</a>
     - 최아람 : <a href="https://ramirami.tistory.com/210" target="_blank">블로그</a>
     - 이지원 : <a href="https://binaryjourney.tistory.com/341" target="_blank">블로그</a>
+   - 이수민 : <a href="https://amenable-tote-342.notion.site/1c8d7524c3d280b09edbfbc32b1fab23" target="_blank">노션</a>
 
 ## 스터디 방식
 - 1주일간 정해진 분량을 읽고 각자 요약합니다.
