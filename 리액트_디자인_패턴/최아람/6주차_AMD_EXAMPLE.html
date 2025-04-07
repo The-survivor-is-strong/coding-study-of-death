@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AMD Todo List</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+        body {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        #todo-form {
+            display: flex;
+            margin-bottom: 20px;
+        }
+        #new-todo {
+            flex-grow: 1;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px 0 0 4px;
+        }
+        #add-button {
+            padding: 8px 16px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 0 4px 4px 0;
+            cursor: pointer;
+        }
+        #add-button:hover {
+            background-color: #45a049;
+        }
+        #todo-list {
+            list-style-type: none;
+            padding: 0;
+        }
+        .todo-item {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            border-bottom: 1px solid #eee;
+        }
+        .todo-item:hover {
+            background-color: #f9f9f9;
+        }
+        .todo-item input[type="checkbox"] {
+            margin-right: 10px;
+        }
+        .todo-text {
+            flex-grow: 1;
+        }
+        .completed {
+            text-decoration: line-through;
+            color: #888;
+        }
+        .delete-btn {
+            background-color: #f44336;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+        .delete-btn:hover {
+            background-color: #d32f2f;
+        }
+    </style>
+</head>
+<body>
+<h1>Todo List</h1>
+<form id="todo-form">
+    <input type="text" id="new-todo" placeholder="할 일을 입력하세요..." required>
+    <button type="submit" id="add-button">추가</button>
+</form>
+<ul id="todo-list"></ul>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js"></script>
+
+<!-- Single file AMD implementation -->
+<script>
+    // Define the TodoModel module
+    define('todoModel', [], function() {
+        function TodoModel() {
+            this.todos = JSON.parse(localStorage.getItem('todos')) || [];
+        }
+
+        TodoModel.prototype.addTodo = function(text) {
+            let todo = {
+                id: Date.now(),
+                text: text,
+                completed: false
+            };
+
+            this.todos.push(todo);
+            this._commit();
+            return todo;
+        };
+
+        TodoModel.prototype.removeTodo = function(id) {
+            this.todos = this.todos.filter(function(todo) {
+                return todo.id !== id;
+            });
+
+            this._commit();
+        };
+
+        TodoModel.prototype.toggleTodo = function(id) {
+            this.todos = this.todos.map(function(todo) {
+                if (todo.id === id) {
+                    return {
+                        id: todo.id,
+                        text: todo.text,
+                        completed: !todo.completed
+                    };
+                }
+                return todo;
+            });
+
+            this._commit();
+        };
+
+        TodoModel.prototype.getTodos = function() {
+            return this.todos;
+        };
+
+        TodoModel.prototype._commit = function() {
+            localStorage.setItem('todos', JSON.stringify(this.todos));
+        };
+
+        return TodoModel;
+    });
+
+    // Define the TodoView module
+    define('todoView', [], function() {
+        function TodoView() {
+            this.form = document.getElementById('todo-form');
+            this.input = document.getElementById('new-todo');
+            this.todoList = document.getElementById('todo-list');
+        }
+
+        TodoView.prototype.displayTodos = function(todos) {
+            let _this = this;
+
+            // Clear todos
+            while (this.todoList.firstChild) {
+                this.todoList.removeChild(this.todoList.firstChild);
+            }
+
+            if (todos.length === 0) {
+                let message = document.createElement('li');
+                message.textContent = '할 일이 없습니다. 새로운 할 일을 추가해보세요!';
+                message.style.textAlign = 'center';
+                message.style.padding = '20px';
+                message.style.color = '#888';
+                this.todoList.appendChild(message);
+                return;
+            }
+
+            // Create todo items
+            todos.forEach(function(todo) {
+                let li = document.createElement('li');
+                li.className = 'todo-item';
+                li.dataset.id = todo.id;
+
+                let checkbox = document.createElement('input');
+                checkbox.type = 'checkbox';
+                checkbox.checked = todo.completed;
+
+                let span = document.createElement('span');
+                span.className = 'todo-text';
+                span.textContent = todo.text;
+                if (todo.completed) {
+                    span.classList.add('completed');
+                }
+
+                let deleteButton = document.createElement('button');
+                deleteButton.className = 'delete-btn';
+                deleteButton.textContent = '삭제';
+
+                li.appendChild(checkbox);
+                li.appendChild(span);
+                li.appendChild(deleteButton);
+
+                _this.todoList.appendChild(li);
+            });
+        };
+
+        TodoView.prototype.bindAddTodo = function(handler) {
+            this.form.addEventListener('submit', function(event) {
+                event.preventDefault();
+
+                if (this.input.value.trim()) {
+                    handler(this.input.value.trim());
+                    this.input.value = '';
+                }
+            }.bind(this));
+        };
+
+        TodoView.prototype.bindDeleteTodo = function(handler) {
+            this.todoList.addEventListener('click', function(event) {
+                if (event.target.className === 'delete-btn') {
+                    let todoId = parseInt(event.target.parentElement.dataset.id);
+                    handler(todoId);
+                }
+            });
+        };
+
+        TodoView.prototype.bindToggleTodo = function(handler) {
+            this.todoList.addEventListener('change', function(event) {
+                if (event.target.type === 'checkbox') {
+                    let todoId = parseInt(event.target.parentElement.dataset.id);
+                    handler(todoId);
+                }
+            });
+        };
+
+        return TodoView;
+    });
+
+    // Define the TodoController module
+    define('todoController', ['todoModel', 'todoView'], function(TodoModel, TodoView) {
+        function TodoController() {
+            this.model = new TodoModel();
+            this.view = new TodoView();
+        }
+
+        TodoController.prototype.init = function() {
+            this.view.displayTodos(this.model.getTodos());
+            this._bindEvents();
+        };
+
+        TodoController.prototype._bindEvents = function() {
+            let _this = this;
+
+            this.view.bindAddTodo(function(text) {
+                _this.model.addTodo(text);
+                _this.view.displayTodos(_this.model.getTodos());
+            });
+
+            this.view.bindDeleteTodo(function(id) {
+                _this.model.removeTodo(id);
+                _this.view.displayTodos(_this.model.getTodos());
+            });
+
+            this.view.bindToggleTodo(function(id) {
+                _this.model.toggleTodo(id);
+                _this.view.displayTodos(_this.model.getTodos());
+            });
+        };
+
+        return TodoController;
+    });
+
+    // Start the application
+    require(['todoController'], function(TodoController) {
+        let todoController = new TodoController();
+        todoController.init();
+    });
+</script>
+</body>
+</html>

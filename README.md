@@ -6,9 +6,19 @@
 
 ## 책 목록
 1. [자바스크립트 + 리액트 디자인 패턴 / 한빛 미디어](https://product.kyobobook.co.kr/detail/S000213880201)
+2. [쏙쏙 들어오는 함수형 코딩](https://product.kyobobook.co.kr/detail/S000001952246)
 
 ## 기간
-1. 자바스크립트 + 리액트 디자인 패턴 : 2025/02/04 ~ 
+1. 자바스크립트 + 리액트 디자인 패턴 : 2025/02/04 ~ 2025/03/25 (7주), 김단우/이수민/이지원/최아람/황태영
+2. 쏙쏙 들어오는 함수형 코딩 : 2025/04/02 ~ , 김단우/김명수/이수민/이지원/최아람/황태영
+
+## 후기
+1. 자바스크립트 + 리액트 디자인 패턴
+    - 김단우 : <a href="https://dansoon-dev.tistory.com/16" target="_blank">블로그</a>
+    - 황태영 : <a href="https://velog.io/@hty0525/JavaScript-React-%EB%94%94%EC%9E%90%EC%9D%B8-%ED%8C%A8%ED%84%B4%EC%9D%84-%EC%9D%BD%EA%B3%A0" target="_blank">블로그</a>
+    - 최아람 : <a href="https://ramirami.tistory.com/210" target="_blank">블로그</a>
+    - 이지원 : <a href="https://binaryjourney.tistory.com/341" target="_blank">블로그</a>
+   - 이수민 : <a href="https://amenable-tote-342.notion.site/1c8d7524c3d280b09edbfbc32b1fab23" target="_blank">노션</a>
 
 ## 스터디 방식
 - 1주일간 정해진 분량을 읽고 각자 요약합니다.
@@ -16,7 +26,7 @@
 - 매주 화요일 9시 온라인에 모여서 서로 공부한 내용에 대해 공유합니다.
 
 ## 구성원
-| 김단우 | 이수민 | 이지원 | 최아람 | 황태영 |
-|:----:|:----:|:----:|:----:|:----:|
-| <img src="https://github.com/KimDanwoo.png" width="150"> | <img src="https://github.com/leesm-sumin.png" width="150"> | <img src="https://github.com/cruellaDev.png" width="150"> | <img src="https://github.com/rami0617.png" width="150"> | <img src="https://github.com/hty0525.png" width="150"> |
-| <div style="width:150px">[@KimDanwoo](https://github.com/KimDanwoo)</div> | <div style="width:150px">[@leesm-sumin](https://github.com/leesm-sumin)</div> | <div style="width:150px">[@cruellaDev](https://github.com/cruellaDev)</div> | <div style="width:150px">[@rami0617](https://github.com/rami0617)</div> | <div style="width:150px">[@hty0525](https://github.com/hty0525)</div> |
+| 김단우 | 김명수 | 이수민 | 이지원 | 최아람 | 황태영 |
+|:----:|:----:|:----:|:----:|:----:|:----:|
+| <img src="https://github.com/KimDanwoo.png" width="150"> | <img src="https://github.com/KimMyeongSu.png" width="150"> | <img src="https://github.com/leesm-sumin.png" width="150"> | <img src="https://github.com/cruellaDev.png" width="150"> | <img src="https://github.com/rami0617.png" width="150"> | <img src="https://github.com/hty0525.png" width="150"> |
+| <div style="width:150px">[@KimDanwoo](https://github.com/KimDanwoo)</div> | <div style="width:150px">[@KimMyeongSu](https://github.com/KimMyeongSu)</div> | <div style="width:150px">[@leesm-sumin](https://github.com/leesm-sumin)</div> | <div style="width:150px">[@cruellaDev](https://github.com/cruellaDev)</div> | <div style="width:150px">[@rami0617](https://github.com/rami0617)</div> | <div style="width:150px">[@hty0525](https://github.com/hty0525)</div> |
