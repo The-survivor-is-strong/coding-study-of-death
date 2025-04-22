@@ -43,144 +43,199 @@ function updateInventory(state, usedBeans, usedMilk) {
   };
 }
 
+// 순수 함수로 가격 계산 로직 분리
+function calculateBasePrice(coffeeType) {
+  const prices = {
+    americano: 3.5,
+    latte: 4.5,
+    cappuccino: 4.7,
+  };
+  return prices[coffeeType] || null;
+}
+
+function calculateSizePrice(basePrice, size) {
+  const sizeMultipliers = {
+    small: 0,
+    medium: 0.75,
+    large: 1.5,
+  };
+  return basePrice + (sizeMultipliers[size] || 0);
+}
+
+function calculateOptionsPrice(price, options) {
+  let totalPrice = price;
+  if (options.extraShot) totalPrice += 0.8;
+  if (options.syrup) totalPrice += 0.5;
+  if (options.whippedCream) totalPrice += 1.0;
+  if (options.pumpkinSpice) totalPrice += 0.9;
+  return totalPrice;
+}
+
+// 재고 확인을 위한 순수 함수
+function hasEnoughIngredients(inventory, requiredBeans, requiredMilk) {
+  return inventory.beans >= requiredBeans && inventory.milk >= requiredMilk;
+}
+
+// 로깅을 위한 함수들
+const CafeLogger = {
+  orderStart: (coffeeType, size, options) => {
+    console.log(
+      `새 주문: ${size} ${coffeeType}, 옵션: ${JSON.stringify(options)}`
+    );
+  },
+
+  preparationSteps: {
+    checkIngredients: () => console.log("재료 확인 중..."),
+    startDrink: () => console.log("음료 제조 시작..."),
+    prepareEspresso: (shotCount, usedBeans, remainingBeans) => {
+      console.log("에스프레소 준비 중...");
+      console.log(`에스프레소 ${shotCount}샷 추출 중...`);
+      console.log(`원두 ${usedBeans}g 사용 중... 남은 양: ${remainingBeans}g`);
+    },
+    prepareMilk: (milkAmount, remainingMilk) => {
+      console.log("우유 데우는 중...");
+      console.log(
+        `우유 ${milkAmount}ml 사용 중... 남은 양: ${remainingMilk}ml`
+      );
+    },
+    addSyrup: (syrupType) => {
+      console.log(`${syrupType} 시럽 추가 중...`);
+      console.log("시럽 15ml 사용 중...");
+    },
+    addWhippedCream: () => {
+      console.log("휘핑크림 올리는 중...");
+      console.log("휘핑크림 20g 사용 중...");
+    },
+    applyHappyHour: () => console.log("해피 아워 15% 할인 적용됨!"),
+    addSeasonalOption: () => {
+      console.log("가을 시즌 메뉴: 바닐라 시럽 추가 (+$0.9)");
+      console.log("바닐라 시럽 10ml 사용 중...");
+    },
+    prepareCup: (size) => console.log(`${size} 사이즈 컵 준비 중...`),
+    complete: (size, coffeeType) =>
+      console.log(`${size} ${coffeeType} 제조 완료!`),
+  },
+
+  salesUpdate: (coffeeType, price, dailySales) => {
+    console.log(`매출 통계 업데이트: ${coffeeType}, $${price.toFixed(2)}`);
+    console.log(`오늘의 총 매출: $${dailySales.toFixed(2)}`);
+  },
+
+  printReceipt: (size, coffeeType, options, totalPrice, timestamp) => {
+    const receiptText = `
+      주문: ${size} ${coffeeType}
+      옵션: ${JSON.stringify(options)}
+      가격: $${totalPrice.toFixed(2)}
+      주문시간: ${new Date(timestamp).toLocaleTimeString()}
+    `;
+    console.log("영수증 출력 중...");
+    console.log(receiptText);
+  },
+
+  pointsEarned: (points) => console.log(`고객 포인트 ${points}점 적립 중...`),
+};
+
+// 재료 계산을 위한 순수 함수들
+function calculateShotCount(options) {
+  return options.extraShot ? 2 : 1;
+}
+
+function calculateRequiredBeans(shotCount) {
+  return shotCount * 7;
+}
+
+function calculateRequiredMilk(coffeeType, size) {
+  if (coffeeType === "americano") return 0;
+
+  const milkAmounts = {
+    small: 150,
+    medium: 250,
+    large: 350,
+  };
+  return milkAmounts[size] || 0;
+}
+
+// 할인 및 시즌 메뉴 관련 순수 함수들
+function isHappyHourTime(hour) {
+  return hour >= 15 && hour < 17;
+}
+
+function isAutumnSeason(month) {
+  return month >= 9 && month <= 12;
+}
+
+function applyHappyHourDiscount(price, hour) {
+  return isHappyHourTime(hour) ? price * 0.85 : price;
+}
+
 /**
  * 커피 제조 함수 - 모든 로직이 혼합된 상태
  */
-function makeCoffee(coffeeType, size, options) {
-  // 현재 시간 확인
-  const now = new Date();
-  const isHappyHour = now.getHours() >= 15 && now.getHours() < 17;
+function makeCoffee(state, coffeeType, size, options) {
+  CafeLogger.orderStart(coffeeType, size, options);
+  CafeLogger.preparationSteps.checkIngredients();
 
-  // 오늘 만든 커피 수량 증가
-  CafeState.totalCoffeeMade++;
+  // 재료 계산 로직 개선
+  const shotCount = calculateShotCount(options);
+  const requiredBeans = calculateRequiredBeans(shotCount);
+  const requiredMilk = calculateRequiredMilk(coffeeType, size);
 
-  // 주문 로깅
-  console.log(
-    `새 주문: ${size} ${coffeeType}, 옵션: ${JSON.stringify(options)}`
-  );
-
-  // 재료 확인
-  console.log("재료 확인 중...");
-  const milkLevel = CafeState.inventory.milk;
-  const espressoBeansLevel = CafeState.inventory.beans;
-  if (milkLevel < 100 || espressoBeansLevel < 20) {
+  // 재고 확인
+  if (!hasEnoughIngredients(state.inventory, requiredBeans, requiredMilk)) {
     console.error("재료가 부족합니다!");
-    return null;
+    return { error: "재료 부족", state };
   }
 
-  // 기본 가격 설정
-  let basePrice = 0;
-  if (coffeeType === "americano") {
-    basePrice = 3.5;
-  } else if (coffeeType === "latte") {
-    basePrice = 4.5;
-  } else if (coffeeType === "cappuccino") {
-    basePrice = 4.7;
-  } else {
-    console.error("알 수 없는 커피 종류입니다.");
-    return null;
-  }
-
-  // 사이즈에 따른 가격 조정
-  if (size === "large") {
-    basePrice += 1.5;
-  } else if (size === "medium") {
-    basePrice += 0.75;
-  }
-
-  // 초기 총 가격
-  let totalPrice = basePrice;
-
-  // 음료 제조 시작
-  console.log("음료 제조 시작...");
-  console.log("에스프레소 준비 중...");
-
-  // 샷 수 계산 및 추가
-  let shotCount = 1;
-  if (options.extraShot) {
-    shotCount += 1;
-    totalPrice += 0.8;
-    console.log("추가 샷 추가됨");
-  }
-
-  // 실제 에스프레소 추출
-  console.log(`에스프레소 ${shotCount}샷 추출 중...`);
-  const usedBeans = shotCount * 7;
-  CafeState.inventory = updateInventory(CafeState, usedBeans, null);
-  console.log(
-    `원두 ${usedBeans}g 사용 중... 남은 양: ${CafeState.inventory.beans}g`
+  // 음료 제조 과정 로깅
+  CafeLogger.preparationSteps.startDrink();
+  CafeLogger.preparationSteps.prepareEspresso(
+    shotCount,
+    requiredBeans,
+    state.inventory.beans - requiredBeans
   );
 
-  // 우유 추가
   if (coffeeType !== "americano") {
-    console.log("우유 데우는 중...");
-    const milkAmount = size === "small" ? 150 : size === "medium" ? 250 : 350;
-    CafeState.inventory = updateInventory(CafeState, null, milkAmount);
-    console.log(
-      `우유 ${milkAmount}ml 사용 중... 남은 양: ${CafeState.inventory.milk}ml`
+    CafeLogger.preparationSteps.prepareMilk(
+      requiredMilk,
+      state.inventory.milk - requiredMilk
     );
   }
 
-  // 시럽 추가
-  if (options.syrup) {
-    totalPrice += 0.5;
-    console.log(`${options.syrup} 시럽 추가 중...`);
-    console.log("시럽 15ml 사용 중...");
+  // 가격 계산 로직 개선
+  let price = calculateBasePrice(coffeeType);
+  price = calculateSizePrice(price, size);
+  price = calculateOptionsPrice(price, options);
+
+  const now = new Date();
+  price = applyHappyHourDiscount(price, now.getHours());
+
+  if (isAutumnSeason(now.getMonth() + 1) && options.pumpkinSpice) {
+    CafeLogger.preparationSteps.addSeasonalOption();
   }
 
-  // 휘핑크림 추가
-  if (options.whippedCream) {
-    totalPrice += 1.0;
-    console.log("휘핑크림 올리는 중...");
-    console.log("휘핑크림 20g 사용 중...");
-  }
+  // 완성 단계
+  CafeLogger.preparationSteps.prepareCup(size);
+  CafeLogger.preparationSteps.complete(size, coffeeType);
 
-  // 해피 아워 할인 적용
-  if (isHappyHour) {
-    totalPrice = totalPrice * 0.85; // 15% 할인
-    console.log("해피 아워 15% 할인 적용됨!");
-  }
+  // 새로운 상태 생성
+  const newState = {
+    ...updateInventory(state, requiredBeans, requiredMilk),
+    dailySales: state.dailySales + price,
+    totalCoffeeMade: state.totalCoffeeMade + 1,
+  };
 
-  // 계절 한정 메뉴 확인
-  const currentMonth = now.getMonth() + 1;
-  if (currentMonth >= 9 && currentMonth <= 12 && options.pumpkinSpice) {
-    totalPrice += 0.9;
-    console.log("가을 시즌 메뉴: 바닐라 시럽 추가 (+$0.9)");
-    console.log("바닐라 시럽 10ml 사용 중...");
-  }
+  // 매출 및 영수증 처리
+  CafeLogger.salesUpdate(coffeeType, price, newState.dailySales);
+  CafeLogger.printReceipt(size, coffeeType, options, price, now);
+  CafeLogger.pointsEarned(Math.floor(price));
 
-  // 컵 준비
-  console.log(`${size} 사이즈 컵 준비 중...`);
-
-  // 음료 완성
-  console.log(`${size} ${coffeeType} 제조 완료!`);
-
-  // 매출 통계 업데이트
-  CafeState.dailySales += totalPrice;
-  console.log(`매출 통계 업데이트: ${coffeeType}, $${totalPrice.toFixed(2)}`);
-  console.log(`오늘의 총 매출: $${CafeState.dailySales.toFixed(2)}`);
-
-  // 영수증 정보 생성
-  const receiptText = `
-   주문: ${size} ${coffeeType}
-   옵션: ${JSON.stringify(options)}
-   가격: $${totalPrice.toFixed(2)}
-   주문시간: ${now.toLocaleTimeString()}
- `;
-
-  // 영수증 출력
-  console.log("영수증 출력 중...");
-  console.log(receiptText);
-
-  // 고객 마일리지 포인트 적립
-  const pointsEarned = Math.floor(totalPrice);
-  console.log(`고객 포인트 ${pointsEarned}점 적립 중...`);
-
-  // 주문 결과 반환
   return {
-    drink: `${size} ${coffeeType}`,
-    price: totalPrice.toFixed(2),
-    timestamp: now.toISOString(),
+    state: newState,
+    result: {
+      drink: `${size} ${coffeeType}`,
+      price: price.toFixed(2),
+      timestamp: now.toISOString(),
+    },
   };
 }
 
@@ -190,33 +245,33 @@ function makeCoffee(coffeeType, size, options) {
 function runExample() {
   // 예시 1: 기본 라떼
   console.log("\n===== 예시 1: 기본 라떼 =====");
-  const coffee1 = makeCoffee("latte", "medium", {
+  const coffee1 = makeCoffee(CafeState, "latte", "medium", {
     extraShot: false,
     syrup: null,
     whippedCream: false,
     pumpkinSpice: false,
   });
-  console.log("주문 결과:", coffee1);
+  console.log("주문 결과:", coffee1.result);
 
   // 예시 2: 커스텀 아메리카노
   console.log("\n===== 예시 2: 커스텀 아메리카노 =====");
-  const coffee2 = makeCoffee("americano", "large", {
+  const coffee2 = makeCoffee(CafeState, "americano", "large", {
     extraShot: true,
     syrup: "caramel",
     whippedCream: false,
     pumpkinSpice: false,
   });
-  console.log("주문 결과:", coffee2);
+  console.log("주문 결과:", coffee2.result);
 
   // 예시 3: 특별 카푸치노
   console.log("\n===== 예시 3: 특별 카푸치노 =====");
-  const coffee3 = makeCoffee("cappuccino", "large", {
+  const coffee3 = makeCoffee(CafeState, "cappuccino", "large", {
     extraShot: true,
     syrup: "vanilla",
     whippedCream: true,
     pumpkinSpice: true,
   });
-  console.log("주문 결과:", coffee3);
+  console.log("주문 결과:", coffee3.result);
 }
 
 // 예시 실행
