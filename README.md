@@ -10,7 +10,7 @@
 
 ## 기간
 1. 자바스크립트 + 리액트 디자인 패턴 : 2025/02/04 ~ 2025/03/25 (7주), 김단우/이수민/이지원/최아람/황태영
-2. 쏙쏙 들어오는 함수형 코딩 : 2025/04/02 ~ , 김단우/김명수/이수민/이지원/최아람/황태영
+2. 쏙쏙 들어오는 함수형 코딩 : 2025/04/02 ~ 2025/06/24 , 김단우/김명수/이수민/이지원/최아람/황태영
 
 ## 후기
 1. 자바스크립트 + 리액트 디자인 패턴
@@ -19,6 +19,10 @@
     - 최아람 : <a href="https://ramirami.tistory.com/210" target="_blank">블로그</a>
     - 이지원 : <a href="https://binaryjourney.tistory.com/341" target="_blank">블로그</a>
    - 이수민 : <a href="https://amenable-tote-342.notion.site/1c8d7524c3d280b09edbfbc32b1fab23" target="_blank">노션</a>
+2. 쏙쏙 들어오는 함수형 코딩
+   - 김단우 : <a href="https://dansoon-dev.tistory.com/17" target="_blank">블로그</a>
+   - 김명수 : <a href="https://velamint.tistory.com/60" target="_blank">블로그</a>
+   - 최아람 : <a href="https://ramirami.tistory.com/212" target="_blank">블로그</a>
 
 ## 스터디 방식
 - 1주일간 정해진 분량을 읽고 각자 요약합니다.
