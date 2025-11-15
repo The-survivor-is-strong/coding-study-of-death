@@ -7,17 +7,21 @@
 ## 책 목록
 1. [자바스크립트 + 리액트 디자인 패턴 / 한빛 미디어](https://product.kyobobook.co.kr/detail/S000213880201)
 2. [쏙쏙 들어오는 함수형 코딩](https://product.kyobobook.co.kr/detail/S000001952246)
+3. [아는 만큼 보이는 생성형 AI](https://product.kyobobook.co.kr/detail/S000217121978)
+4. [HTTP 완벽 가이드](https://product.kyobobook.co.kr/detail/S000001033001)
 
 ## 기간
 1. 자바스크립트 + 리액트 디자인 패턴 : 2025/02/04 ~ 2025/03/25 (7주), 김단우/이수민/이지원/최아람/황태영
 2. 쏙쏙 들어오는 함수형 코딩 : 2025/04/02 ~ 2025/06/24 , 김단우/김명수/이수민/이지원/최아람/황태영
+3. 아는 만큼 보이는 생성형 AI : 2025/08/05 ~ 2025/08/19 , 김명수/이수민/황태영
+4. HTTP 완벽 가이드 : 2025/10/21 ~ , 김단우/김명수/이수민/최아람
 
 ## 후기
 1. 자바스크립트 + 리액트 디자인 패턴
-    - 김단우 : <a href="https://dansoon-dev.tistory.com/16" target="_blank">블로그</a>
-    - 황태영 : <a href="https://velog.io/@hty0525/JavaScript-React-%EB%94%94%EC%9E%90%EC%9D%B8-%ED%8C%A8%ED%84%B4%EC%9D%84-%EC%9D%BD%EA%B3%A0" target="_blank">블로그</a>
-    - 최아람 : <a href="https://ramirami.tistory.com/210" target="_blank">블로그</a>
-    - 이지원 : <a href="https://binaryjourney.tistory.com/341" target="_blank">블로그</a>
+   - 김단우 : <a href="https://dansoon-dev.tistory.com/16" target="_blank">블로그</a>
+   - 황태영 : <a href="https://velog.io/@hty0525/JavaScript-React-%EB%94%94%EC%9E%90%EC%9D%B8-%ED%8C%A8%ED%84%B4%EC%9D%84-%EC%9D%BD%EA%B3%A0" target="_blank">블로그</a>
+   - 최아람 : <a href="https://ramirami.tistory.com/210" target="_blank">블로그</a>
+   - 이지원 : <a href="https://binaryjourney.tistory.com/341" target="_blank">블로그</a>
    - 이수민 : <a href="https://amenable-tote-342.notion.site/1c8d7524c3d280b09edbfbc32b1fab23" target="_blank">노션</a>
 2. 쏙쏙 들어오는 함수형 코딩
    - 김단우 : <a href="https://dansoon-dev.tistory.com/17" target="_blank">블로그</a>
